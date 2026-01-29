@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('home') }}">EMS</a>
+    <div>
+      <a class="btn btn-light" href="{{ url_for('login') }}">Login</a>
+      <a class="btn btn-light" href="{{ url_for('register') }}">Register</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card p-4 shadow-sm">
+                <h1 class="mb-3">Welcome to Employee Management System</h1>
+                <p class="mb-3">
+                    This system helps organizations manage employee data efficiently.
+                    You can add, view, edit, and delete employee details depending on your role.
+                </p>
+                <p class="mb-3">
+                    Admins have full access to all employee operations, while regular users can view and edit their own info.
+                </p>
+                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg mt-3">Go to Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
