@@ -1,11 +1,13 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import get_db_connection
 
+# ---------- FLASK APP ----------
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = os.getenv("SECRET_KEY")  # Set this in Render env variables
 
-# ---------- HOME PAGE ----------\
+# ---------- HOME PAGE ----------
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -16,6 +18,7 @@ def login():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
+
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
@@ -45,8 +48,10 @@ def register():
         conn = get_db_connection()
         cursor = conn.cursor()
         try:
-            cursor.execute("INSERT INTO users (username,password,role) VALUES (%s,%s,%s)",
-                           (username, hashed_password, role))
+            cursor.execute(
+                "INSERT INTO users (username,password,role) VALUES (%s,%s,%s)",
+                (username, hashed_password, role)
+            )
             conn.commit()
             flash("Registration successful! Please login.", "success")
             return redirect(url_for('login'))
@@ -183,6 +188,3 @@ def view_employee(id):
 def logout():
     session.clear()
     return redirect(url_for('login'))
-
-if __name__ == "__main__":
-    app.run(debug=True)
